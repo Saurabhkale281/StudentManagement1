@@ -1,28 +1,28 @@
-# Use the official OpenJDK image as the base image
+# First stage: Build the Spring Boot application
 FROM maven:3.8.5-openjdk-17 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the pom.xml file and download dependencies
+# Copy the pom.xml file first to download dependencies
 COPY pom.xml .
 
-# Download project dependencies (this will cache the dependencies)
+# Download dependencies without building the project (this step helps with caching)
 RUN mvn dependency:go-offline
 
-# Copy the entire project into the container
+# Copy the rest of the project files
 COPY . .
 
-# Package the application
-RUN mvn clean package
+# Run Maven to build the project and package it into a JAR file
+RUN mvn clean package -DskipTests
 
-# Second stage: create a minimal image for the application
+# Second stage: Create a minimal image for running the application
 FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the built JAR file from the first stage
+# Copy the JAR file from the first stage
 COPY --from=build /app/target/RegLogPage-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port 8080 to the outside world
