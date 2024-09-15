@@ -10,6 +10,9 @@
 	<groupId>Project</groupId>
 	<artifactId>StudentManagement1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<packaging>jar</packaging>
+	
 	<name>RegLogPage</name>
 	<description>student management project backend</description>
 	<properties>

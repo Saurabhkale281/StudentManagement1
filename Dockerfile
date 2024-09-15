@@ -23,7 +23,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the JAR file from the build stage to the runtime stage
-COPY --from=build /app/target/RegLogPage-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/StudentManagement1-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port 8080
 EXPOSE 8888
